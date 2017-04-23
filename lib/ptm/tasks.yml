@@ -1,12 +1,11 @@
--  martin:
-    name: Martin D'vloper
-    job: Developer
+-   title: Martin D'vloper
+    s: Developer
     skills:
       - python
       - perl
       - pascal
--  tabitha:
-    name: Tabitha Bitumen
+    complete: true
+-   title: Tabitha Bitumen
     job: Developer
     skills:
       - lisp
