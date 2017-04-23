@@ -1,7 +1,9 @@
-# module Ptm
-#   class Task
-#     def foo
-#       'test'
-#     end
-#   end
-# end
+# wrapper module
+module Ptm
+  # task class
+  class Task
+    def foo
+      'test'
+    end
+  end
+end

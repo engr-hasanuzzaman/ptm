@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require 'ptm'
 
-Ptm::Task.start(ARGV)
+Ptm::Command.start(ARGV)
