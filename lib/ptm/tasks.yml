@@ -1,13 +1,8 @@
--   title: Martin D'vloper
-    s: Developer
-    skills:
-      - python
-      - perl
-      - pascal
-    complete: true
--   title: Tabitha Bitumen
-    job: Developer
-    skills:
-      - lisp
-      - fortran
-      - erlang
+---
+- :title: Martin D'vloper
+  :complete: true
+- :title: Tabitha Bitumen
+- :title: this is new task
+  :category: general
+  :created_at: 2017-04-24 20:09:32.841192281 +06:00
+  :complete: false

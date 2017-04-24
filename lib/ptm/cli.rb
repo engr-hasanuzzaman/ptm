@@ -8,7 +8,7 @@ module Ptm
     def list
       task_number = 0
 
-      FileHelper::read_yml(FileHelper::YML_PATH).each do |task|
+      FileHelper.read_yml(FileHelper::YML_PATH).each do |task|
         print_task(task,
                    task_number,
           task_color(task['complete'])
@@ -27,18 +27,18 @@ module Ptm
       task[:category] = options[:category]
       task[:created_at] = Time.now
       task[:complete] = options[:completed_status]
-      FileHelper::append_to_file(FileHelper::YML_PATH, task)
+      FileHelper.append_to_file(FileHelper::YML_PATH, task)
     end
 
     # this will not be treated as command
     no_commands do
       def print_task(task, serial, color)
         say(set_color("Task number: #{serial}", :black, :on_white, :bold))
-        say("title: #{task['title']}", color, true)
-        say("category: #{task['category']}", color, true)
-        say("complete: #{task['complete']}", color, true)
-        say("created_at: #{task['created_at']}", color, true)
-        say("completed_at: #{task['created_at']}", color, true)
+        say("title: #{task[:title]}", color, true)
+        say("category: #{task[:category]}", color, true)
+        say("complete: #{task[:complete]}", color, true)
+        say("created_at: #{task[:created_at]}", color, true)
+        say("completed_at: #{task[:created_at]}", color, true)
         puts ''
       end
 
