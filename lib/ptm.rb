@@ -1,5 +1,5 @@
 require 'ptm/version'
-require 'ptm/task'
+require 'ptm/file_helper'
 require 'ptm/cli'
 
 # top level module

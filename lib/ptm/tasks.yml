@@ -1,0 +1,13 @@
+-   title: Martin D'vloper
+    s: Developer
+    skills:
+      - python
+      - perl
+      - pascal
+    complete: true
+-   title: Tabitha Bitumen
+    job: Developer
+    skills:
+      - lisp
+      - fortran
+      - erlang
