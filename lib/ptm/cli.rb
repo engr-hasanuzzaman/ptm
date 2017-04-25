@@ -6,15 +6,7 @@ module Ptm
   class Command < Thor
     desc 'list', 'This will show all of your tasks'
     def list
-      task_number = 0
-
-      FileHelper.read_yml(FileHelper::YML_PATH).each do |task|
-        print_task(task,
-                   task_number,
-          task_color(task['complete'])
-        )
-        task_number += 1
-      end
+      print_table(table(FileHelper.read_yml(FileHelper::YML_PATH)))
     end
     map :'-l' => :list
 
@@ -32,14 +24,13 @@ module Ptm
 
     # this will not be treated as command
     no_commands do
-      def print_task(task, serial, color)
-        say(set_color("Task number: #{serial}", :black, :on_white, :bold))
+      def print_task(task, color)
+        say(set_color("Task number: #{task[:number]}", :black, :on_white, :bold))
         say("title: #{task[:title]}", color, true)
         say("category: #{task[:category]}", color, true)
         say("complete: #{task[:complete]}", color, true)
         say("created_at: #{task[:created_at]}", color, true)
         say("completed_at: #{task[:created_at]}", color, true)
-        puts ''
       end
 
       def task_color(status)
@@ -48,6 +39,30 @@ module Ptm
         else
           :yellow
         end
+      end
+
+      # create table from data
+      def table(tasks)
+        table = []
+        table_header = ['Id', 'title', 'category', 'created at', 'complete', 'completed at']
+        table << table_header
+
+        id = 1
+        tasks.each do |task|
+          column = []
+          column << id
+          column << set_color((task[:title] || 'no title'), :red)
+          column << task[:category] || 'no category'
+          column << task[:created_at] || 'no created_at'
+          column << task[:complete] || 'no complete'
+          column << task[:completed_at] || 'no completed_at'
+
+          # push column to table
+          table << column
+          id += 1
+        end
+
+        table
       end
     end
   end
