@@ -48,18 +48,21 @@ module Ptm
         table << table_header
 
         id = 1
-        tasks.each do |task|
+        tasks.each do |task_attrs|
+          task = Ptm::Task.new(task_attrs)
+          complete_task = CompletedTask.new(task)
           column = []
-          column << id
-          column << set_color((task[:title] || 'no title'), :red)
-          column << task[:category] || 'no category'
-          column << task[:created_at] || 'no created_at'
-          column << task[:complete] || 'no complete'
-          column << task[:completed_at] || 'no completed_at'
-
-          # push column to table
+          column << complete_task.id
+          column << complete_task.title
+          # column << set_color((task[:title] || 'no title'), :red)
+          # column << task[:category] || 'no category'
+          # column << task[:created_at] || 'no created_at'
+          # column << task[:complete] || 'no complete'
+          # column << task[:completed_at] || 'no completed_at'
+          #
+          # # push column to table
           table << column
-          id += 1
+          # id += 1
         end
 
         table
