@@ -24,48 +24,51 @@ module Ptm
 
     # this will not be treated as command
     no_commands do
-      def print_task(task, color)
-        say(set_color("Task number: #{task[:number]}", :black, :on_white, :bold))
-        say("title: #{task[:title]}", color, true)
-        say("category: #{task[:category]}", color, true)
-        say("complete: #{task[:complete]}", color, true)
-        say("created_at: #{task[:created_at]}", color, true)
-        say("completed_at: #{task[:created_at]}", color, true)
-      end
+      # def print_task(task, color)
+      #   say(set_color("Task number: #{task[:number]}", :black, :on_white, :bold))
+      #   say("title: #{task[:title]}", color, true)
+      #   say("category: #{task[:category]}", color, true)
+      #   say("complete: #{task[:complete]}", color, true)
+      #   say("created_at: #{task[:created_at]}", color, true)
+      #   say("completed_at: #{task[:created_at]}", color, true)
+      # end
 
-      def task_color(status)
-        if status
-          :green
-        else
-          :yellow
-        end
-      end
+      # def task_color(status)
+      #   if status
+      #     :green
+      #   else
+      #     :yellow
+      #   end
+      # end
 
       # create table from data
       def table(tasks)
         table = []
-        table_header = ['Id', 'title', 'category', 'created at', 'complete', 'completed at']
+        table_header = [
+          header_col('Id'),
+          header_col('title'),
+          header_col('category'),
+          header_col('created at'),
+          header_col('complete'),
+          header_col('completed at')
+        ]
         table << table_header
 
-        id = 1
         tasks.each do |task_attrs|
           task = Ptm::Task.new(task_attrs)
-          complete_task = CompletedTask.new(task)
-          column = []
-          column << complete_task.id
-          column << complete_task.title
-          # column << set_color((task[:title] || 'no title'), :red)
-          # column << task[:category] || 'no category'
-          # column << task[:created_at] || 'no created_at'
-          # column << task[:complete] || 'no complete'
-          # column << task[:completed_at] || 'no completed_at'
-          #
-          # # push column to table
-          table << column
-          # id += 1
+          decorated_task = if task.complete
+                             CompletedTask.new(task)
+                           else
+                             PendingTask.new(task)
+                           end
+          table << decorated_task.attrs_val
         end
 
         table
+      end
+
+      def header_col(val)
+        val.color(:white)
       end
     end
   end

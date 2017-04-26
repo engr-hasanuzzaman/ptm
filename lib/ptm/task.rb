@@ -1,5 +1,3 @@
-require 'rainbow/ext/string'
-
 module Ptm
   class Task
     # class obj that will use to generate obj id
@@ -11,7 +9,7 @@ module Ptm
     def initialize(attrs)
       return unless attrs.is_a?(Hash)
 
-      puts "passing hash is #{attrs}"
+      # puts "passing hash is #{attrs}"
       self.title = attrs[:title]
       self.category = attrs[:category]
       self.created_at = attrs[:created_at]

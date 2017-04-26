@@ -1,6 +1,6 @@
 # decorator class
 module Ptm
-  class CompletedTask < TaskDecorator
+  class PendingTask < TaskDecorator
     #
     # include
     #
@@ -12,7 +12,7 @@ module Ptm
     #
 
     def font_color
-      :cyan
+      :yellow
     end
 
     def bg_color
