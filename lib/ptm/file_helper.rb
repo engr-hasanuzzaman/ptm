@@ -12,10 +12,8 @@ module Ptm
 
     def self.append_to_file(file_path, data)
       return unless valid_task?(data) || valid_yml?(file_path)
-      puts ' write to file now'
       new_data = read_yml(file_path)
       new_data << data
-      puts "-------- after adding new data #{data}, new data is #{new_data}"
       write_to_file(file_path, new_data.to_yaml)
     end
 

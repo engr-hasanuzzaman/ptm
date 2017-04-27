@@ -9,7 +9,6 @@ module Ptm
     def initialize(attrs)
       return unless attrs.is_a?(Hash)
 
-      # puts "passing hash is #{attrs}"
       self.title = attrs[:title]
       self.category = attrs[:category]
       self.created_at = attrs[:created_at]
