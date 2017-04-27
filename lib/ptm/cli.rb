@@ -6,7 +6,7 @@ module Ptm
   class Command < Thor
     desc 'list', 'This will show all of your tasks'
     def list
-      print_table(table(FileHelper.read_yml(FileHelper::YML_PATH)))
+      print_table(table(load_tasks))
     end
     map :'-l' => :list
 
@@ -18,29 +18,23 @@ module Ptm
       task[:title] = title
       task[:category] = options[:category]
       task[:created_at] = Time.now
+      task[:completed_at] = Time.now if options[:completed_status]
       task[:complete] = options[:completed_status]
       FileHelper.append_to_file(FileHelper::YML_PATH, task)
     end
 
+    desc 'remove_tasks', 'remove task with given id.'
+    method_option :id, aliases: 'i', type: :numeric, default: 0
+    def remove_tasks
+      if options[:id].zero?
+        remove_all_tasks
+      else
+        remove_task(options[:id])
+      end
+    end
+
     # this will not be treated as command
     no_commands do
-      # def print_task(task, color)
-      #   say(set_color("Task number: #{task[:number]}", :black, :on_white, :bold))
-      #   say("title: #{task[:title]}", color, true)
-      #   say("category: #{task[:category]}", color, true)
-      #   say("complete: #{task[:complete]}", color, true)
-      #   say("created_at: #{task[:created_at]}", color, true)
-      #   say("completed_at: #{task[:created_at]}", color, true)
-      # end
-
-      # def task_color(status)
-      #   if status
-      #     :green
-      #   else
-      #     :yellow
-      #   end
-      # end
-
       # create table from data
       def table(tasks)
         table = []
@@ -54,8 +48,7 @@ module Ptm
         ]
         table << table_header
 
-        tasks.each do |task_attrs|
-          task = Ptm::Task.new(task_attrs)
+        tasks.each do |task|
           decorated_task = if task.complete
                              CompletedTask.new(task)
                            else
@@ -69,6 +62,32 @@ module Ptm
 
       def header_col(val)
         val.color(:white)
+      end
+
+      # load task data from YAML file &
+      # make task object
+      def load_tasks
+        FileHelper.read_yml(FileHelper::YML_PATH).map do |task_attrs|
+          Ptm::Task.new(task_attrs)
+        end
+      end
+
+      def tasks_hash(tasks)
+        tasks.map do |task|
+          task.to_hash
+        end
+      end
+
+      def remove_task(id)
+        tasks = load_tasks
+        tasks.reject! { |task| task.id == id }
+        new_data = tasks_hash(tasks)
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def remove_all_tasks
+        new_data = []
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
       end
     end
   end
