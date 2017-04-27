@@ -20,5 +20,15 @@ module Ptm
       # increment class variable for next obj
       @@obj_id += 1
     end
+
+    def to_hash
+      hash = {}
+      instance_variables.each do |var|
+        key = var.to_s.delete('@').to_sym
+        hash[key] = instance_variable_get(var) unless key == :id # skip id
+      end
+
+      hash
+    end
   end
 end

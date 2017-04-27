@@ -16,7 +16,11 @@ module Ptm
       new_data = read_yml(file_path)
       new_data << data
       puts "-------- after adding new data #{data}, new data is #{new_data}"
-      File.write(file_path, new_data.to_yaml)
+      write_to_file(file_path, new_data.to_yaml)
+    end
+
+    def self.write_to_file(file_path, data)
+      File.write(file_path, data)
     end
 
     def self.valid_yml?(path)
