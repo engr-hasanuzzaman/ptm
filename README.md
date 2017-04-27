@@ -25,7 +25,10 @@ Or install it yourself as:
 `ptm list`
  
 ### add new task
+ add new task with default 'default' category
  `ptm add_task 'this is test title'`
+ 
+  add new task with under 'test_category' category
  `ptm add_task 'this is test title' -c='test_category'`
   
 ### remove all tasks
