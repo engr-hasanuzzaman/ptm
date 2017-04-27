@@ -33,6 +33,16 @@ module Ptm
       end
     end
 
+    desc 'complete_tasks', 'make task complete for given task id'
+    method_option :id, aliases: 'i', type: :numeric, default: 0
+    def complete_tasks
+      if options[:id].zero?
+        complete_all_tasks
+      else
+        complete_task(options[:id])
+      end
+    end
+
     # this will not be treated as command
     no_commands do
       # create table from data
@@ -87,6 +97,20 @@ module Ptm
 
       def remove_all_tasks
         new_data = []
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def complete_all_tasks
+        tasks = load_tasks
+        tasks.each { |task| task.complete = true }
+        new_data = tasks_hash(tasks)
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def complete_task(id)
+        tasks = load_tasks
+        tasks.each { |task| task.complete = true if task.id == id.to_i }
+        new_data = tasks_hash(tasks)
         FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
       end
     end
