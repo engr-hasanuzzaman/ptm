@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.10.4'
 
   # runtime dependency
-  spec.add_dependency 'thor'
-  spec.add_dependency 'httparty'
-  spec.add_dependency 'rainbow'
+  spec.add_dependency 'thor', '~> 0.19.4'
+  spec.add_dependency 'httparty', '~> 0.14.0'
+  spec.add_dependency 'rainbow', '~> 2.2.2'
 end
