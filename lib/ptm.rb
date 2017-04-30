@@ -1,3 +1,4 @@
+require 'pry'
 require 'rainbow/ext/string'
 require 'ptm/decorator_helper'
 require 'ptm/task'

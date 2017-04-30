@@ -6,7 +6,7 @@ module Ptm
   class Command < Thor
     desc 'list', 'This will show all of your tasks'
     def list
-      print_table(table(load_tasks))
+      print_table(table(Task.load_tasks))
     end
     map :'-l' => :list
 
@@ -20,6 +20,9 @@ module Ptm
       task[:created_at] = Time.now
       task[:completed_at] = Time.now if options[:completed_status]
       task[:complete] = options[:completed_status]
+
+      # check valid task data
+      return unless Task.valid_task?(task)
       FileHelper.append_to_file(FileHelper::YML_PATH, task)
     end
 
@@ -27,9 +30,9 @@ module Ptm
     method_option :id, aliases: 'i', type: :numeric, default: 0
     def remove_tasks
       if options[:id].zero?
-        remove_all_tasks
+        Task.remove_all_tasks
       else
-        remove_task(options[:id])
+        Task.remove_task(options[:id])
       end
     end
 
@@ -37,9 +40,9 @@ module Ptm
     method_option :id, aliases: 'i', type: :numeric, default: 0
     def complete_tasks
       if options[:id].zero?
-        complete_all_tasks
+        Task.complete_all_tasks
       else
-        complete_task(options[:id])
+        Task.complete_task(options[:id])
       end
     end
 
@@ -72,46 +75,6 @@ module Ptm
 
       def header_col(val)
         val.color(:white)
-      end
-
-      # load task data from YAML file &
-      # make task object
-      def load_tasks
-        FileHelper.read_yml(FileHelper::YML_PATH).map do |task_attrs|
-          Ptm::Task.new(task_attrs)
-        end
-      end
-
-      def tasks_hash(tasks)
-        tasks.map do |task|
-          task.to_hash
-        end
-      end
-
-      def remove_task(id)
-        tasks = load_tasks
-        tasks.reject! { |task| task.id == id }
-        new_data = tasks_hash(tasks)
-        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
-      end
-
-      def remove_all_tasks
-        new_data = []
-        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
-      end
-
-      def complete_all_tasks
-        tasks = load_tasks
-        tasks.each { |task| task.complete = true }
-        new_data = tasks_hash(tasks)
-        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
-      end
-
-      def complete_task(id)
-        tasks = load_tasks
-        tasks.each { |task| task.complete = true if task.id == id.to_i }
-        new_data = tasks_hash(tasks)
-        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
       end
     end
   end
