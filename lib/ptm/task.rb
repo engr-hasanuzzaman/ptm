@@ -29,5 +29,51 @@ module Ptm
 
       hash
     end
+
+    #
+    # class methods
+    #
+
+    class << self
+      # load task data from YAML file &
+      # make task object
+      def load_tasks
+        FileHelper.read_yml(FileHelper::YML_PATH).map do |task_attrs|
+          Ptm::Task.new(task_attrs)
+        end
+      end
+
+      def tasks_hash(tasks)
+        tasks.map do |task|
+          task.to_hash
+        end
+      end
+
+      def remove_task(id)
+        tasks = load_tasks
+        tasks.reject! { |task| task.id == id }
+        new_data = tasks_hash(tasks)
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def remove_all_tasks
+        new_data = []
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def complete_all_tasks
+        tasks = load_tasks
+        tasks.each { |task| task.complete = true }
+        new_data = tasks_hash(tasks)
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def complete_task(id)
+        tasks = load_tasks
+        tasks.each { |task| task.complete = true if task.id == id.to_i }
+        new_data = tasks_hash(tasks)
+        FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+    end
   end
 end
