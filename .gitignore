@@ -12,3 +12,7 @@
 .rspec_status
 /.idea
 
+# keep tasks.yml to git ingore
+/lib/ptm/tasks.yml
+
+
