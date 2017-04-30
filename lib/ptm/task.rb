@@ -43,12 +43,6 @@ module Ptm
         end
       end
 
-      def tasks_hash(tasks)
-        tasks.map do |task|
-          task.to_hash
-        end
-      end
-
       def remove_task(id)
         tasks = load_tasks
         tasks.reject! { |task| task.id == id }
@@ -73,6 +67,23 @@ module Ptm
         tasks.each { |task| task.complete = true if task.id == id.to_i }
         new_data = tasks_hash(tasks)
         FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
+      end
+
+      def valid_task?(task)
+        # binding.pry
+        task && task.is_a?(Hash) && !task[:title].nil?
+      end
+
+      #
+      # private class methods
+      #
+
+      private
+
+      def tasks_hash(tasks)
+        tasks.map do |task|
+          task.to_hash
+        end
       end
     end
   end

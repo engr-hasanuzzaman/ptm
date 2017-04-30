@@ -20,6 +20,9 @@ module Ptm
       task[:created_at] = Time.now
       task[:completed_at] = Time.now if options[:completed_status]
       task[:complete] = options[:completed_status]
+
+      # check valid task data
+      return unless Task.valid_task?(task)
       FileHelper.append_to_file(FileHelper::YML_PATH, task)
     end
 
