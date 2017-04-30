@@ -10,9 +10,16 @@ Gem::Specification.new do |spec|
   spec.authors       = ['engr-hasanuzzaman']
   spec.email         = ['hasanuzzaman.sumon@gmail.com']
 
-  spec.summary       = 'this is test summary'
-  spec.description   = 'this is test description'
-  spec.homepage      = ''
+  spec.summary       = <<-DESC
+    Personal task manager(ptm) is a command line application build for managing personal tasks list.'
+  DESC
+
+  spec.description = <<-DESCRIPTION
+  Personal task manager(ptm) is a command line application implemented in Ruby using Thor. Using this app you can manage
+  your task list, like add new task, make complete existing task, remove task etc. Please visit homepage for knowing
+  about available functionality.
+  DESCRIPTION
+  spec.homepage      = 'https://github.com/engr-hasanuzzaman/ptm'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
