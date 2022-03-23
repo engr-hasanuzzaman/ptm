@@ -64,7 +64,7 @@ module Ptm
 
       def complete_task(id)
         tasks = load_tasks
-        tasks.each { |task| task.complete = true if task.id == id.to_i }
+        tasks.each { |task| task.complete = true; task.completed_at = Time.now if task.id == id.to_i }
         new_data = tasks_hash(tasks)
         FileHelper.write_to_file(FileHelper::YML_PATH, new_data.to_yaml)
       end
