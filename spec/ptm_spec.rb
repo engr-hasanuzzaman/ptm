@@ -1,11 +1,12 @@
 require 'spec_helper'
 
-describe Ptm do
+describe Ptm::Task do
   it 'has a version number' do
     expect(Ptm::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(Ptm::Task.new.foo).to eq('test')
+  it 'create task instance using passing data' do
+    task = described_class.new({ title: "foo" })
+    expect(task.title).to eq "foo"
   end
 end
