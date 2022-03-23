@@ -1,8 +1,6 @@
 # Ptm
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ptm`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`ptm (Personal Task Manager)` is a Ruby  `gem` that provide command line inteface to manage our personal tasks list on terminal.
 
 ## Installation
 
