@@ -70,7 +70,6 @@ module Ptm
       end
 
       def valid_task?(task)
-        # binding.pry
         task && task.is_a?(Hash) && !task[:title].nil?
       end
 

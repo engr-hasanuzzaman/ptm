@@ -37,6 +37,10 @@ module Ptm
         File.file?(path) && File.extname(path) == '.sample'
       end
 
+      def write_to_file(file_path, data)
+        File.write(file_path, data)
+      end
+
       #
       # private methods
       #
@@ -57,10 +61,6 @@ module Ptm
 
       def create_new_file(path)
         File.open(path, 'w')
-      end
-
-      def write_to_file(file_path, data)
-        File.write(file_path, data)
       end
     end
   end
